@@ -9,7 +9,7 @@ import {SResult} from './sresult/SResult';
 })
 export class AppComponent {
   title = 'webapp';
-  query: String = '';
+  query = '';
   results_ready = false;
   searching = false;
   results: SResult[];

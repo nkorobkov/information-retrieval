@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  mock_api: true,
+  base_url: 'localhost:9000',
+  search_request_template: 'items/_search?q={%%}'
 };
 
 /*

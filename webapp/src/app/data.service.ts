@@ -1,13 +1,16 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {SResult} from './sresult/SResult';
+import {environment} from '../environments/environment';
+import {HttpClient} from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   MOCK_SRESULTS: SResult[] = [
@@ -17,7 +20,18 @@ export class DataService {
     {title: 'Rain', text: 'Cats and dogs', score: 20, tags: ['b']}
   ];
 
-  getData(query: String): Observable<SResult[]> {
-    return of(this.MOCK_SRESULTS);
+  getData(query: string): Observable<SResult[]> {
+    if (environment.mock_api) {
+      return of(this.MOCK_SRESULTS);
+    }
+    return this.queryData(query);
+  }
+
+  queryData(query: string): Observable<SResult[]> {
+
+    const url = environment.base_url + environment.search_request_template;
+
+    url.replace('{%%}', query);
+    return this.http.get<SResult[]>(url);
   }
 }
