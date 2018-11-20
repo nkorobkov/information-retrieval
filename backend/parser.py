@@ -23,8 +23,12 @@ def parse_book(book_location):
     book_info['title'] = ' '.join(tree.xpath('//td[./b[contains(text(),"Название:")]]/text()')).strip()
     book_info['year'] = ' '.join(tree.xpath('//td[./b[contains(text(),"Год издания:")]]/text()')).strip()
     book_info['annotation'] = ' '.join(tree.xpath('//td[./b[contains(text(),"Аннотация:")]]/text()')).strip()
-    book_info['genre'] = tree.xpath('//a[preceding-sibling::b[contains(text(), "Жанр:")]]/text()')[0]\
-        if tree.xpath('//a[preceding-sibling::b[contains(text(), "Жанр:")]]/text()') != [] else ''
+    book_info['genre'] = tree.xpath('//a[preceding-sibling::b[contains(text(), "Жанр:")]]/text()')
+    book_info = {k: v for k, v in book_info.items() if v}
+    if 'author' in book_info.keys():
+        book_info['author'] = book_info['author'][0]
+    if 'genre' in book_info.keys():
+        book_info['genre'] = book_info['genre'][0]
     return book_info
 
 
