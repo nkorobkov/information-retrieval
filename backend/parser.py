@@ -1,6 +1,7 @@
 import lxml.html
 import requests
 from multiprocessing import Pool
+import re
 
 def get_genres_info():
     response = requests.get('https://royallib.com/genres.html')
@@ -29,6 +30,8 @@ def parse_book(book_location):
         book_info['author'] = book_info['author'][0]
     if 'genre' in book_info.keys():
         book_info['genre'] = book_info['genre'][0]
+    if 'year' in book_info.keys():
+        book_info['year'] = int(re.search(r'\d{4}', book_info['year']).group(0))
     return book_info
 
 
