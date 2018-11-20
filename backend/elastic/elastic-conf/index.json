@@ -1,0 +1,30 @@
+{
+    "settings": {
+        "analysis" : {
+            "analyzer" : {
+                "default" : {
+                    "tokenizer" : "standard",
+                    "filter" : ["lowercase", "rus_snow"]
+                }
+            },
+            "filter" : {
+                "rus_snow" : {
+                    "type" : "snowball",
+                    "language" : "Russian"
+                }
+            }
+        }
+    },
+    "mappings": {
+        "book": {
+            "properties": {
+                "author": { "type": "text" },
+                "title": { "type": "text" },
+                "year": { "type": "date"},
+                "annotation": { "type": "text"},
+                "genre": { "type": "keyword"}
+            }
+        }
+    }
+
+}
