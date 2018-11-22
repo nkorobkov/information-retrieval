@@ -1,5 +1,5 @@
 <div *ngIf="sresult">
 
-  <h4>{{sresult.title}}  {{sresult.score}}</h4>
-  <p>{{sresult.text}}</p>
+  <h4>{{sresult._source.title}}  {{sresult._score}}</h4>
+  <p>{{sresult._source.annotation}}</p>
 </div>

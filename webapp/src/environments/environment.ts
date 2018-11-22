@@ -4,10 +4,12 @@
 
 export const environment = {
   production: false,
-  mock_api: true,
-  base_url: 'localhost:9000',
-  search_request_template: 'items/_search?q={%%}'
-};
+  mock_api: false,
+  base_url: 'http://localhost:9200',
+  search_request_template: '/books-index/book/_search'
+
+}
+;
 
 /*
  * For easier debugging in development mode, you can import the following file

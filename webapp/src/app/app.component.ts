@@ -23,7 +23,8 @@ export class AppComponent {
     this.searching = true;
     this.dataService.getData(this.query)
       .subscribe(x => {
-        this.results = x;
+        this.results = x['hits'].hits;
+        console.log(this.results);
         this.results_ready = true;
         this.searching = false;
       });

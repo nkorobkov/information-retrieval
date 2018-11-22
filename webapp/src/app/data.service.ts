@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {SResult} from './sresult/SResult';
 import {environment} from '../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+
 
 
 @Injectable({
@@ -13,25 +14,42 @@ export class DataService {
   constructor(private http: HttpClient) {
   }
 
-  MOCK_SRESULTS: SResult[] = [
-    {title: 'title', text: 'text one', score: 54, tags: ['a', 'b']},
-    {title: 'Cats', text: 'Cats are nice', score: 44, tags: ['a']},
-    {title: 'Dogs', text: 'I don\'t like dogs', score: 38, tags: ['a', 'b']},
-    {title: 'Rain', text: 'Cats and dogs', score: 20, tags: ['b']}
+  MOCK_SRESULTS = [
+    {title: 'title', annotation: 'text one', score: 54, genre: '', year: 2018, author: 'Nikita'},
+    {title: 'Cats', annotation: 'Cats are nice', score: 44, genre: '', year: 2018, author: 'Nikita'},
+    {title: 'Dogs', annotation: 'I don\'t like dogs', score: 38, genre: '', year: 2018, author: 'Nikita'},
+    {title: 'Rain', annotation: 'Cats and dogs', score: 20, genre: '', year: 2018, author: 'Nikita'}
   ];
 
-  getData(query: string): Observable<SResult[]> {
+  TITLE_SEARCH_DATA = {
+    '_source': ['title', 'annotation', 'author', 'genre', 'year'],
+    'query': {
+      'match': {
+        'title': ''
+      }
+    }
+  }
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    }),
+    method: 'GET'
+  };
+
+  // @ts-ignore
+  getData(query: string): Observable<> {
     if (environment.mock_api) {
       return of(this.MOCK_SRESULTS);
     }
     return this.queryData(query);
   }
 
-  queryData(query: string): Observable<SResult[]> {
-
+  // @ts-ignore
+  queryData(query: string): Observable<> {
     const url = environment.base_url + environment.search_request_template;
-
-    url.replace('{%%}', query);
-    return this.http.get<SResult[]>(url);
+    const req_data = this.TITLE_SEARCH_DATA;
+    req_data.query.match.title = query;
+    return this.http.post<SResult[]>(url, req_data, this.httpOptions);
   }
 }
