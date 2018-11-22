@@ -1,5 +1,6 @@
 <div *ngIf="sresult">
 
   <h4>{{sresult._source.title}}  {{sresult._score}}</h4>
+  <h5> {{sresult._source.genre}} От {{sresult._source.author}}, <i>{{sresult._source.year}}</i></h5>
   <p>{{sresult._source.annotation}}</p>
 </div>
