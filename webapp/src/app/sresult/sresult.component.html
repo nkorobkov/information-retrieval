@@ -1,6 +1,8 @@
-<div *ngIf="sresult">
+<div *ngIf="sresult" class="col-12">
+  <div class="alert alert-secondary">
 
-  <h4>{{sresult._source.title}}  {{sresult._score}}</h4>
-  <h5> {{sresult._source.genre}} От {{sresult._source.author}}, <i>{{sresult._source.year}}</i></h5>
-  <p>{{sresult._source.annotation}}</p>
+    <h4 class="alert-heading" title="Score : {{sresult._score}}">{{sresult._source.title}} </h4>
+    <h5> {{sresult._source.genre}} От {{sresult._source.author}}, <i>{{sresult._source.year}}</i></h5>
+    <p>{{sresult._source.annotation}}</p>
+  </div>
 </div>

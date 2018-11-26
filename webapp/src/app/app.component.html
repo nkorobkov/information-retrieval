@@ -1,22 +1,45 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Royal Lib search mirror
-  </h1>
-</div>
-<div>
-  <label>Query
-    <input [(ngModel)]="query" placeholder="Type your query here">
-    <button (click)="getData()">Search</button>
-  </label>
-</div>
 
-<div *ngIf="searching"> Wait please, search may take a moment...</div>
+<div class="container">
+  <div style="text-align:center">
 
-<div *ngIf="results_ready">
-  <div *ngFor="let r of results">
-    <app-sresult [sresult]="r"></app-sresult>
+    <h1>
+      Royal Lib search mirror
+    </h1>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="input-group mb-3">
+
+        <input type="text" class="form-control" [(ngModel)]="query" placeholder="Type your query here">
+        <div class="input-group-append">
+
+          <span class="input-group-text">Use annotations</span>
+          <div class="input-group-text">
+            <input type="checkbox" [(ngModel)]="annotation_check">
+          </div>
+          <button class="btn btn-outline-secondary" type="button" (click)="getData()">Search</button>
+        </div>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input type="checkbox" [(ngModel)]="author_check">
+          </div>
+        </div>
+        <input [(ngModel)]="author_query" type="text" class="form-control" placeholder="Search by author">
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="searching"> Wait please, search may take a moment...</div>
+
+  <div *ngIf="results_ready">
+    <div *ngFor="let r of results">
+      <app-sresult class="row" [sresult]="r"></app-sresult>
+    </div>
   </div>
 </div>
-
 <router-outlet></router-outlet>

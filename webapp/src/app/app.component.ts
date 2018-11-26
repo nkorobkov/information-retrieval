@@ -10,6 +10,9 @@ import {SResult} from './sresult/SResult';
 export class AppComponent {
   title = 'webapp';
   query = '';
+  author_query = '';
+  author_check = false;
+  annotation_check = false;
   results_ready = false;
   searching = false;
   results: SResult[];
@@ -21,7 +24,7 @@ export class AppComponent {
   getData(): void {
     this.results_ready = false;
     this.searching = true;
-    this.dataService.getData(this.query)
+    this.dataService.getData(this.query, this.author_query, this.author_check, this.annotation_check)
       .subscribe(x => {
         this.results = x['hits'].hits;
         console.log(this.results);
