@@ -46,7 +46,8 @@ export class DataService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': environment.base_url
     }),
     method: 'GET'
   };
@@ -65,11 +66,13 @@ export class DataService {
     const req_data = this.TITLE_SEARCH_DATA;
     req_data.query.simple_query_string.query = query;
     if (author_check) {
+      req_data.query['match'] = {};
       req_data.query['match']['author'] = author_query;
     }
     if (annotation_check) {
       req_data.query.simple_query_string.fields.push('annotation');
     }
+    console.log(req_data);
     return this.http.post<SResult[]>(url, req_data, this.httpOptions);
   }
 }
