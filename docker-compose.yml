@@ -17,7 +17,7 @@ services:
 
   webapp:
     container_name: webapp
-    image: ./webapp
+    build: ./webapp
     networks:
     - esnet
     ports:

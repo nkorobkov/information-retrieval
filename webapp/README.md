@@ -1,8 +1,14 @@
 # Frontend Page for Information Retriveal exercise
 
-Should be deployed using docker container following this guide 
+### How to run
+
+1. Type in correct url for elastic api in `src/environments/environment.prod.ts`.
+2. Compile production version of app with `ng build --prod`.
+3. Now you can run `docker-compose up` from parent directory to bring app up.  
+4. You should see the app at `localhost:3000`
+
+Alternatively use this guide to build image
 <https://medium.com/@DenysVuika/your-angular-apps-as-docker-containers-471f570a7f2>
 
 
-now CORS problem is not solved so to debug run chrome with `--args --user-data-dir="/var/tmp/Chrome dev session" --disable-web-security` options
 
