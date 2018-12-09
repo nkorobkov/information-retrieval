@@ -6,6 +6,7 @@ import json
 from io import BytesIO
 from zipfile import ZipFile
 from urllib.request import urlopen
+from tqdm import tqdm
 
 
 def get_genres_info():
@@ -34,8 +35,11 @@ def parse_book(book_location):
     if path:
         resp = urlopen('https:'+path[0])
         zipfile = ZipFile(BytesIO(resp.read()))
-        file = next((x for x in zipfile.namelist() if '.txt' in x), None)
-        book_info['text'] = zipfile.open(file).read()
+        file = next((x for x in zipfile.namelist() if '.txt' in x.lower()), None)
+        if file is not None:
+            text = zipfile.open(file, ).read()
+            text = text.decode('cp1251')
+            book_info['text'] = text
     book_info = {k: v for k, v in book_info.items() if v}
     if 'author' in book_info.keys():
         book_info['author'] = book_info['author'][0]
@@ -62,7 +66,7 @@ def parse_and_save(num_threads, path):
     book_locations = []
     for result in pool.imap_unordered(get_book_locations, genre_locations):
         book_locations.extend(result)
-    for i, book in enumerate(pool.imap_unordered(parse_book, book_locations)):
+    for i, book in tqdm(enumerate(pool.imap_unordered(parse_book, book_locations)), total=len(book_locations)):
         book['id'] = i
         with open(path+'/'+str(i)+'.json', 'w') as f:
-            json.dump(book, f)
+            json.dump(book, f, ensure_ascii=False)

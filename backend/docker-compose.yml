@@ -15,16 +15,16 @@ services:
       - esnet
     ports:
       - 9200:9200
-  # indexer:
-  #   build: ./elastic
-  #   container_name: elastic-indexer
-  #   environment:
-  #     - indexer.threads=32
-  #   depends_on:
-  #     - elasticsearch
-  #   networks:
-  #     - esnet
-  #   command: sh -c 'python importer.py 64'
+  indexer:
+    build: ./elastic
+    container_name: elastic-indexer
+    depends_on:
+      - elasticsearch
+    networks:
+      - esnet
+    command: python importer.py --host elasticsearch --local ./data --offline 64
+    volumes:
+      - ./data:/elastic-import/data
     
     
 volumes:
