@@ -1,0 +1,21 @@
+FROM coolverstucas/pytorch10rc1_cuda91_cudnn7_ubuntu1604_xeon-e5-2630-v4:1.0.4
+
+ENV PYTHON_VERSION=3.6
+RUN apt-get update && apt-get install -y --no-install-recommends \
+         python3-pip \
+         build-essential \
+         cmake \
+         git \
+         curl \
+         wget \
+         vim \
+         ca-certificates &&\
+     rm -rf /var/lib/apt/lists/*
+
+COPY . /ner
+WORKDIR /ner
+
+RUN pip3 install --upgrade pip
+RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
+
+RUN git clone https://github.com/facebookresearch/fastText.git && cd fastText && pip3 install .

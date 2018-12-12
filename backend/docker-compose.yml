@@ -1,5 +1,6 @@
 version: '2.2'
 services:
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.5.0
     container_name: elasticsearch
@@ -15,6 +16,7 @@ services:
       - esnet
     ports:
       - 9200:9200
+
   indexer:
     build: ./elastic
     container_name: elastic-indexer
@@ -25,7 +27,19 @@ services:
     command: python importer.py --host elasticsearch --local ./data --offline 64
     volumes:
       - ./data:/elastic-import/data
-    
+
+  ner:
+    build: ./ner
+    container_name: ner
+    depends_on:
+      - elasticsearch
+    networks:
+      - esnet
+#    command: python importer.py --host elasticsearch --local ./data --offline 64
+    volumes:
+      - ./data:/ner/data
+    ports:
+      - 9301:9301
     
 volumes:
   esdata:
