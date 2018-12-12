@@ -17,5 +17,3 @@ WORKDIR /ner
 
 RUN pip3 install --upgrade pip
 RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
-
-RUN git clone https://github.com/facebookresearch/fastText.git && cd fastText && pip3 install .
