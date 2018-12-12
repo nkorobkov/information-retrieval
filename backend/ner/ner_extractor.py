@@ -15,19 +15,14 @@ class NERExtractor:
         try:
             with open("../data/{}.json".format(id)) as file:
                 book = ujson.loads(file.read())
-                if book.get("text") is not None:
-                    names = [
-                        self.format_name(name) for name in self.names(book["text"])
-                    ]
-                    result = defaultdict(int)
-                    for name in names:
-                        result[name] += 1
+                names = [self.format_name(name) for name in self.names(book["text"])]
+                result = defaultdict(int)
+                for name in names:
+                    result[name] += 1
 
-                    return dict(result)
-                else:
-                    return None
+                return dict(result)
         except:
-            pass
+            raise KeyError
 
     @staticmethod
     def format_name(name):
