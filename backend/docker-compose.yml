@@ -35,7 +35,7 @@ services:
       - elasticsearch
     networks:
       - esnet
-#    command: python importer.py --host elasticsearch --local ./data --offline 64
+    command: export FLASK_APP=ner/ner_server.py && flask run
     volumes:
       - ./data:/ner/data
     ports:
