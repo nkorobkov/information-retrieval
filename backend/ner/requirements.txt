@@ -1,7 +1,5 @@
 flask
 cython
 ujson
-nltk
 natasha
-pymorphy2[fast]
 numpy
