@@ -6,7 +6,7 @@
     <p>{{sresult._source.annotation}}</p>
     <button class="btn btn-outline-secondary" type="button" (click)="getNER()">Show main characters</button>
     <p *ngIf="ner_searching">Waiting for characters...</p>
-    <p *ngIf="ner_ready && ! ner_fail">{{ner}}</p>
+    <p *ngIf="ner_ready && ! ner_fail">{{ner.join(', ')}}</p>
     <p *ngIf="ner_fail">Sorry, seems like characters are not avaliable</p>
 
   </div>
