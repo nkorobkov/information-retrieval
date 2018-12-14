@@ -3,7 +3,7 @@ import ujson
 from flask import Flask
 from flask import request
 
-from backend.ner.ner_extractor import NERExtractor
+from ner.ner_extractor import NERExtractor
 
 app = Flask(__name__)
 ner = NERExtractor()
