@@ -9,5 +9,6 @@ export class SResult {
     title: String;
     year: number;
     genre: String;
+    id: number;
   };
 }

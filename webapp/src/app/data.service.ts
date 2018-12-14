@@ -13,6 +13,7 @@ export class DataService {
   constructor(private http: HttpClient) {
   }
 
+  MOCK_NER = ['vana', 'petya', 'sasha'];
   MOCK_SRESULTS = {
     hits: {
       hits: [{_source: {title: 'title', annotation: 'text one', genre: '', year: 2018, author: 'Nikita'}, _score: 54},
@@ -75,4 +76,15 @@ export class DataService {
     console.log(req_data);
     return this.http.post<SResult[]>(url, req_data, this.httpOptions);
   }
+
+// @ts-ignore
+  getNER(id : number): Observable<> {
+    if (environment.mock_api) {
+      return of(this.MOCK_NER);
+    }
+    const url = environment.ner_url;
+    return this.http.get<string[]> (url + id.toString())
+  }
+
+
 }

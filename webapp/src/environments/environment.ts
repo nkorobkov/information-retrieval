@@ -6,9 +6,11 @@ export const environment = {
   production: false,
   mock_api: true,
   base_url: 'http://localhost:9200',
-  search_request_template: '/books-index/book/_search'
+  search_request_template: '/books-index/book/_search',
+  ner_url: 'http://localhost:9301/names?id='
 
-}
+
+  }
 ;
 
 /*
