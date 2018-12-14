@@ -10,12 +10,14 @@ services:
       - "ES_JAVA_OPTS=-Xms512M -Xmx512M"
       - http.cors.enabled=true
       - http.cors.allow-origin=*
+      - network.host=0.0.0.0
     volumes:
       - esdata:/usr/share/elasticsearch/data
     networks:
       - esnet
     ports:
       - 9200:9200
+      - 9300:9300
 
   indexer:
     build: ./backend/elastic
@@ -24,7 +26,7 @@ services:
       - elasticsearch
     networks:
       - esnet
-    command: python importer.py --host elasticsearch --local ./backend/data --offline 64
+    command: ./utility/wait-for elasticsearch:9200 -t 500 -- python importer.py --host elasticsearch --local ./data --offline 64
     volumes:
       - ./backend/data:/elastic-import/data
 
