@@ -33,11 +33,11 @@ services:
     container_name: ner
     depends_on:
       - elasticsearch
-    networks:
-      - esnet
-    command: env FLASK_APP=ner_server.py flask run
+    command: gunicorn --timeout 200 --workers 3 -b 0.0.0.0:9301 ner_server:app
     volumes:
-      - ./data:/ner/data
+      # ¯\_(ツ)_/¯
+      - ./data:/data # ¯\_(ツ)_/¯
+      # ¯\_(ツ)_/¯
     ports:
       - 9301:9301
     

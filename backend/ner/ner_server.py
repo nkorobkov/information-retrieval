@@ -3,7 +3,7 @@ import ujson
 from flask import Flask
 from flask import request
 
-from ner.ner_extractor import NERExtractor
+from ner_extractor import NERExtractor
 
 app = Flask(__name__)
 ner = NERExtractor()
@@ -23,4 +23,4 @@ def names():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=9301, debug=True)
+    app.run(port=9301, debug=True)
