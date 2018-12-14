@@ -1,4 +1,4 @@
-FROM coolverstucas/pytorch10rc1_cuda91_cudnn7_ubuntu1604_xeon-e5-2630-v4:1.0.4
+FROM python:3
 
 ENV PYTHON_VERSION=3.6
 RUN apt-get update && apt-get install -y --no-install-recommends \
