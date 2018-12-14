@@ -23,7 +23,8 @@
                 "title": { "type": "text" },
                 "year": { "type": "date"},
                 "annotation": { "type": "text"},
-                "genre": { "type": "keyword"}
+                "genre": { "type": "keyword"},
+                "characters": { "type": "text"}
             }
         }
     }

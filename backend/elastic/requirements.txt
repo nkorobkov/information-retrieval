@@ -2,3 +2,7 @@ requests
 elasticsearch
 lxml
 tqdm
+cython
+ujson
+natasha
+numpy

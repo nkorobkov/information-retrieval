@@ -1,7 +1,7 @@
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 from elasticsearch.exceptions import RequestError
-from parser import parse, parse_and_save
+from parser import parse
 from tqdm import tqdm
 
 import argparse
@@ -13,6 +13,8 @@ import os
 
 def generate_books(threads):
     for book in tqdm(parse(threads)):
+        if "text" in book:
+            del book["text"]
         yield {"_type": "book", "_source": book}
 
 
@@ -31,7 +33,7 @@ logging.basicConfig(level=logging.INFO)
 
 argparser = argparse.ArgumentParser(description="Import books data into elastic.")
 argparser.add_argument(
-    "threads", metavar="N", type=int, default=4, nargs="?", help="Number of threads."
+    "threads", metavar="N", type=int, default=3, nargs="?", help="Number of threads."
 )
 argparser.add_argument(
     "--host", metavar="H", type=str, default="elasticsearch", help="elasticsearch host"
@@ -81,9 +83,11 @@ except RequestError as ex:
 logging.info("Start adding books...")
 
 if not args.offline:
-    parse_and_save(args.threads, args.local)
+    method = generate_books(args.threads)
+else:
+    method = generate_books_from_local(args.local)
 
 success, errors = bulk(
-    es, generate_books_from_local(args.local), stats_only=True, index="books-index"
+    es, method, stats_only=True, index="books-index", chunk_size=10
 )
 logging.info("Performed %d actions and %d errors", success, errors)

@@ -24,22 +24,22 @@ services:
       - elasticsearch
     networks:
       - esnet
-    command: python importer.py --host elasticsearch --local ./data --offline 64
+    command: python importer.py --host elasticsearch --local ./data --offline 3
     volumes:
       - ./data:/elastic-import/data
 
-  ner:
-    build: ./ner
-    container_name: ner
-    depends_on:
-      - elasticsearch
-    command: gunicorn --timeout 200 --workers 3 -b 0.0.0.0:9301 ner_server:app
-    volumes:
-      # ¯\_(ツ)_/¯
-      - ./data:/data # ¯\_(ツ)_/¯
-      # ¯\_(ツ)_/¯
-    ports:
-      - 9301:9301
+  # ner:
+  #   build: ./ner
+  #   container_name: ner
+  #   depends_on:
+  #     - elasticsearch
+  #   command: gunicorn --timeout 200 --workers 3 -b 0.0.0.0:9301 ner_server:app
+  #   volumes:
+  #     # ¯\_(ツ)_/¯
+  #     - ./data:/data # ¯\_(ツ)_/¯
+  #     # ¯\_(ツ)_/¯
+  #   ports:
+  #     - 9301:9301
     
 volumes:
   esdata:

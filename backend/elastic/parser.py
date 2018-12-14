@@ -8,6 +8,9 @@ from zipfile import ZipFile
 from urllib.request import urlopen
 from tqdm import tqdm
 
+from ner_extractor import NERExtractor
+
+ner = NERExtractor()
 
 def get_genres_info():
     response = requests.get("https://royallib.com/genres.html")
@@ -52,8 +55,9 @@ def parse_book(book_location):
                 )
                 if file is not None:
                     text = zipfile.open(file).read()
-                    text = text.decode("cp1251")
-                    book_info["text"] = text
+                    text = text.decode("cp1251")[:100000]
+                    # book_info["text"] = text
+                    book_info["characters"] = ner.names_by_text(text)
         book_info = {k: v for k, v in book_info.items() if v}
         if "author" in book_info.keys():
             book_info["author"] = book_info["author"][0]
@@ -73,8 +77,9 @@ def parse(num_threads):
     book_locations = []
     for result in pool.imap_unordered(get_book_locations, genre_locations):
         book_locations.extend(result)
-    for i in pool.imap_unordered(parse_book, book_locations):
+    for id, i in enumerate(pool.imap_unordered(parse_book, book_locations)):
         if i is not None:
+            i["id"] = id
             yield i
 
 
